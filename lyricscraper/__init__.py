@@ -17,3 +17,6 @@ def RateLimited(maxPerSecond):
             return ret
         return rateLimitedFunction
     return decorate
+
+
+__version__ = '2020.08.01'

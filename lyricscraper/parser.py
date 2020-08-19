@@ -46,6 +46,9 @@ def is_song(file):
     """ Returns true if file is a known song extension. This list is self-maintained. """
     return file.lower().endswith(SONG_EXTENSIONS)
 
+def get_file_extension(file):
+    return pathlib.Path(file).suffix
+
 def clean_title(title):
     return title.strip()
 
