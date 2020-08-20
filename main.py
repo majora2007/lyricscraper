@@ -21,7 +21,9 @@ def init_args():
 
     # Optional Parameters
     parser.add_argument('--force', required=False, action='store_true',
-                        help="Forces program to overwrite existing txt files")
+                        help="Forces program to overwrite existing txt (lyric) files")
+    parser.add_argument('--embed', required=False, action='store_true',
+                        help="Write any scraped lyrics to IDv3 tags")
     parser.add_argument('--debug', required=False, action='store_true', help="Change logging level to debug")
     return parser.parse_args()
 
@@ -54,7 +56,7 @@ def has_lyrics(full_song_file):
     no_extension_file = parser.get_file_extension(full_song_file)
     return os.path.exists(full_song_file.replace(no_extension_file, '.txt')) or os.path.exists(full_song_file.replace(no_extension_file, '.lrc'))
 
-def scan_dir(root_dir, scrapers, force_overwrite):
+def scan_dir(root_dir, scrapers, force_overwrite, embed_lyrics):
     logger.info('Scanning {} for songs...'.format(root_dir))
     for dirpath, _, files in os.walk(root_dir, topdown=True):
         for file in files:
@@ -76,7 +78,9 @@ def scan_dir(root_dir, scrapers, force_overwrite):
                 
                 # Write lyrics to file
                 if len(lyrics) > 0:
-                    song.write_lyrics(lyrics)
+                    if embed_lyrics:
+                        song.write_lyrics(lyrics)
+
                     with codecs.open(os.path.join(dirpath, parser.clean_file_extension(file) + '.txt'), 'w+', 'utf-8') as file:
                         file.write(lyrics.strip())
 
@@ -86,6 +90,7 @@ if __name__ == '__main__':
     setup_logger(bool(args.debug))
     directory = get_argument(args.scan_dir)
     force_overwrite = bool(args.force)
+    embed_lyrics = bool(args.embed)
     scrapers = setup_scrapers()
     
-    scan_dir(directory, scrapers, force_overwrite)
+    scan_dir(directory, scrapers, force_overwrite, embed_lyrics)
