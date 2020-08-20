@@ -1,8 +1,12 @@
 from mutagen.easyid3 import EasyID3
+from mutagen.id3 import ID3, SYLT, USLT, Encoding
 from .parser import parse_title, parse_artist
 import logging
 
 logger = logging.getLogger('lyricscraper')
+
+SYNCED_LYRICS = 'SYLT'
+UNSYNCED_LYRICS = 'USLT'
 
 class Song():
     artist = ''
@@ -23,7 +27,15 @@ class Song():
             self.title = parse_title(self.filename)
             self.artist = parse_artist(self.filename)
         
-        print('Extracted: {} - {}'.format(self.artist, self.title))
+        logger.debug('Extracted: {} - {}'.format(self.artist, self.title))
+    
+    def write_lyrics(self, lyrics):
+        self.lyrics = lyrics
+        tag = ID3(self.filename, v2_version=3)
+        tag.add(USLT(encoding=Encoding.UTF8, lang='eng', text=lyrics))
+        #tag.setall(UNSYNCED_LYRICS, [SYLT(encoding=Encoding.UTF8, lang='eng', text=lyrics)]) #  format=2, type=1 for SYLT lyrics.
+        tag.save(v2_version=3)
+        
     
     
         
