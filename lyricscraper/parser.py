@@ -1,3 +1,4 @@
+import os
 import re
 import pathlib
 
@@ -5,11 +6,11 @@ SONG_EXTENSIONS = ('.mp3', '.m4a', '.ogg', '.flac')
 
 TITLE_REGEX = [
     # Track without artist (01. trackName)
-    re.compile(r'(?P<trackNumber>\d*){0,1}([-| .]{0,1})[-| ]{0,1}(?P<trackName>[a-zA-Z0-9, ().&_]+)', re.IGNORECASE),
+    re.compile(r'(?P<trackNumber>\d*){0,1}([-| .]{0,1})[-| ]{0,1}(?P<trackName>[a-zA-Z0-9, ().&_]+)(?P<artist>)', re.IGNORECASE),
     # Track with artist (01 - artist - trackName)
     re.compile(r'(?P<trackNumber>\d*){0,1}([-| ]{0,1})(?P<artist>[a-zA-Z0-9, ().&_]*)[-| ]{0,1}(?P<trackName>[a-zA-Z0-9, ().&_]+)', re.IGNORECASE),
     # Track without artist (01 - trackName), Track without trackNumber or artist(trackName), Track without trackNumber and  with artist(artist - trackName)
-    re.compile(r'(?P<trackNumber>\d*)[-| .]{0,1}(?P<trackName>[a-zA-Z0-9, ().&_]+)', re.IGNORECASE),
+    re.compile(r'(?P<trackNumber>\d*)[-| .]{0,1}(?P<trackName>[a-zA-Z0-9, ().&_]+)(?P<artist>)', re.IGNORECASE),
     # Track with artist and starting title (01 - artist - trackName)
     re.compile(r'(?P<trackNumber>\d*){0,1}[-| ]{0,1}(?P<artist>[a-zA-Z0-9, ().&_]*)[-| ]{0,1}(?P<trackName>[a-zA-Z0-9, ().&_]+)', re.IGNORECASE),
 ]
@@ -55,3 +56,7 @@ def clean_title(title):
 def clean_file_extension(filename):
     """ Returns just the filename """
     return pathlib.Path(filename).stem
+
+def has_lyrics(full_song_file):
+    no_extension_file = get_file_extension(full_song_file)
+    return os.path.exists(full_song_file.replace(no_extension_file, '.txt')) or os.path.exists(full_song_file.replace(no_extension_file, '.lrc'))

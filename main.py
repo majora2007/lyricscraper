@@ -7,12 +7,13 @@ import codecs
 import logging
 import os
 import sys
+import random
 
 
 logger = logging.getLogger('lyricscraper')
 root_dir = os.getcwd()
 
-scraper_list = ['MusixMatch'] # 'AZLyrics'
+scraper_list = ['Genius'] # 'MusixMatch', 'AZLyrics', 'Genius'
 
 def init_args():
     parser = argparse.ArgumentParser()
@@ -52,9 +53,8 @@ def setup_scrapers():
     
     return scrapers
 
-def has_lyrics(full_song_file):
-    no_extension_file = parser.get_file_extension(full_song_file)
-    return os.path.exists(full_song_file.replace(no_extension_file, '.txt')) or os.path.exists(full_song_file.replace(no_extension_file, '.lrc'))
+def random_scraper():
+    return random.choice(scraper_list)
 
 def scan_dir(root_dir, scrapers, force_overwrite, embed_lyrics):
     logger.info('Scanning {} for songs...'.format(root_dir))
@@ -63,7 +63,7 @@ def scan_dir(root_dir, scrapers, force_overwrite, embed_lyrics):
             if parser.is_song(file):
                 full_filepath = os.path.join(dirpath, file)
                 
-                if has_lyrics(full_filepath) and not force_overwrite:
+                if parser.has_lyrics(full_filepath) and not force_overwrite:
                     print('Skipping {}, has existing lyric file', file)
                     continue
                 

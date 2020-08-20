@@ -6,5 +6,4 @@ players, but nice to have.
 
 # TODO
 - Song parsing needs a lot of work
-- Write lyrics to IDv3 tags
 - Choose random scraper rather than always hitting them in order
