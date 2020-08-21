@@ -6,4 +6,4 @@ players, but nice to have.
 
 # TODO
 - Song parsing needs a lot of work
-- Choose random scraper rather than always hitting them in order
+- Integreate Gooey

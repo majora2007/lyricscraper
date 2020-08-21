@@ -26,7 +26,10 @@ class TestGeniusScraper(unittest.TestCase):
         self.assertTrue(len(lyrics) > 0)
 
     def test_no_results(self):
-        lyrics = self.scapper.scrape(lyricscraper.song.Song('Oliver Tree - 2002'))
+        song = lyricscraper.song.Song('')
+        song.artist = 'Oliver Tree'
+        song.title = '2002'
+        lyrics = self.scapper.scrape(song)
         self.assertTrue(len(lyrics) == 0)
     
         

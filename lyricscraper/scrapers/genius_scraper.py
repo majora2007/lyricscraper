@@ -24,18 +24,15 @@ class GeniusScraper(Scraper):
     
     @RateLimited(1) 
     def scrape(self, song,):
-        self.driver.init_chrome(headless=False)
+        self.driver.init_chrome()
         
         query = song.artist + ' - ' + song.title
         url = self.QUERY_URL % query
         lyrics = ''
         
         logger.info('[Genius] Searching for {}'.format(url))
-        print('[Genius] Searching for {}'.format(url))
         
         self.driver.get_url(url)
-        
-        
         
         # Validate results found
         try:
@@ -46,15 +43,12 @@ class GeniusScraper(Scraper):
             pass
         
         for a in self.driver.verify_elems('a.mini_card'):
-            print(a.get_attribute('href'))
             soup = BeautifulSoup(a.get_attribute('innerHTML'), 'html.parser')
 
             artist = self.clean(soup.find('div', {'class': 'mini_card-subtitle'}).text).lower()
             title = self.clean(soup.find('div', {'class': 'mini_card-title'}).text).lower()
             
-            print('{} - {} vs {} - {}'.format(artist, title, song.artist.strip().lower(), song.title.strip().lower()))
             if artist == song.artist.strip().lower() and title == song.title.strip().lower():
-                print('song match')
                 search_results = requests.get(a.get_attribute('href'), headers=self.request_headers).content
                 lyric_soup = BeautifulSoup(search_results, 'html.parser') # TODO: Switch out with lxml
                 
