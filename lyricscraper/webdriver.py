@@ -20,7 +20,7 @@ class WebDriver(object):
 
     def __init__(self):
         self.driver = None
-
+        
     def init_chrome(self, download_dir='', headless=True):
         opts = webdriver.ChromeOptions()
         opts.add_argument('--no-sandbox')

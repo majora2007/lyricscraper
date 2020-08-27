@@ -9,6 +9,8 @@ import os
 import sys
 import random
 
+from gooey import Gooey, GooeyParser
+
 
 logger = logging.getLogger('lyricscraper')
 root_dir = os.getcwd()
@@ -16,16 +18,21 @@ root_dir = os.getcwd()
 scraper_list = ['Genius'] # 'MusixMatch', 'AZLyrics', 'Genius'
 
 def init_args():
-    parser = argparse.ArgumentParser()
+    parser = GooeyParser(description='Lyric Scraper')
+    
     # Required Parameters
-    parser.add_argument('--scan_dir', required=False, nargs=1, help="Path to the directory to scan for music. Scans recursively")
+    parser.add_argument('--scan_dir', required=True, metavar='Scan Directory', help='Path to the directory to scan for music. Scans recursively', widget='DirChooser')
 
     # Optional Parameters
-    parser.add_argument('--force', required=False, action='store_true',
-                        help="Forces program to overwrite existing txt (lyric) files")
-    parser.add_argument('--embed', required=False, action='store_true',
-                        help="Write any scraped lyrics to IDv3 tags")
-    parser.add_argument('--debug', required=False, action='store_true', help="Change logging level to debug")
+    optional_group = parser.add_argument_group(
+        'Optional Options', 
+    )
+    optional_group.add_argument('--embed', required=False, metavar='Write IDv3 Tags', action='store_true',
+                        help='Write any scraped lyrics to IDv3 tags')
+    optional_group.add_argument('--force', required=False, metavar='Force Overwrite', action='store_true',
+                        help='Forces program to overwrite existing txt (lyric) files')
+    optional_group.add_argument('--debug', required=False, metavar='Enable Debug mode', action='store_true', help='Change logging level to debug')
+    
     return parser.parse_args()
 
 
@@ -83,14 +90,16 @@ def scan_dir(root_dir, scrapers, force_overwrite, embed_lyrics):
 
                     with codecs.open(os.path.join(dirpath, parser.clean_file_extension(file) + '.txt'), 'w+', 'utf-8') as file:
                         file.write(lyrics.strip())
-
-if __name__ == '__main__':
-    
+@Gooey
+def main(program_name='Test Readiness Updater', program_description='This program automates updating test readiness status from iTrack'):
     args = init_args()
     setup_logger(bool(args.debug))
-    directory = get_argument(args.scan_dir)
+    directory = args.scan_dir
     force_overwrite = bool(args.force)
     embed_lyrics = bool(args.embed)
     scrapers = setup_scrapers()
     
     scan_dir(directory, scrapers, force_overwrite, embed_lyrics)
+
+if __name__ == '__main__':
+    main()
