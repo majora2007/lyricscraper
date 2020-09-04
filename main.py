@@ -15,8 +15,7 @@ from gooey import Gooey, GooeyParser
 logger = logging.getLogger('lyricscraper')
 root_dir = os.getcwd()
 
-scraper_list = ['Genius'] # 'MusixMatch', 'AZLyrics', 'Genius'
-
+scraper_list = ['MusixMatch', 'AZLyrics'] # Genius
 def init_args():
     parser = GooeyParser(description='Lyric Scraper')
     
