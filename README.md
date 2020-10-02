@@ -8,7 +8,7 @@ players, but nice to have.
 - chromedriver.exe next to this executable/script (on run, it may open a console. It's only used for one scraper.)
 
 ## Note
-This program was only tested and built for Windows, but should work on linux if built that way
+This program was only tested and built for Windows, but should work on linux if built that way ()
 
 # TODO
-- Song parsing needs a lot of work
+- Post summary screen with missed, successful scrapes.
