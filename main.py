@@ -2,6 +2,7 @@ from lyricscraper.scrapers import ScraperFactory
 from lyricscraper import Song
 from lyricscraper import parser
 
+
 import argparse
 import codecs
 import logging

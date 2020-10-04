@@ -74,11 +74,24 @@ class Song():
      
     
     def write_lyrics(self, lyrics):
+        # TODO: Figure out how to do for non IDv3
         self.lyrics = lyrics
-        tag = ID3(self.filename, v2_version=3)
+        file = File(self.filename)
+        for tag in ('lyrics:description', 'USLT:description', 'LYRICS', 'Lyrics', '©lyr', 'WM/Lyrics'):
+            try:
+                file[tag] = self.lyrics
+                break
+            except KeyError:
+                pass
+            except ValueError:
+                pass
+        
+        file.save()
+        
+        """ tag = ID3(self.filename, v2_version=3)
         tag.add(USLT(encoding=Encoding.UTF8, lang='eng', text=lyrics))
         #tag.setall(UNSYNCED_LYRICS, [SYLT(encoding=Encoding.UTF8, lang='eng', text=lyrics)]) #  format=2, type=1 for SYLT lyrics.
-        tag.save(v2_version=3)
+        tag.save(v2_version=3) """
         
     
 

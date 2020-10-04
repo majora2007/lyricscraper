@@ -82,7 +82,16 @@ for tag in ('TPE1', 'TPE2', u'©ART', 'Author', 'Artist', 'artist', 'ARTIST', 'T
     except ValueError:
         pass
 
+for tag in ('lyrics:description', 'USLT:description', 'LYRICS', 'Lyrics', '©lyr', 'WM/Lyrics'):
+    try:
+        m[tag] = 'Test'
+        break
+    except KeyError:
+        pass
+    except ValueError:
+        pass
 
+m.save()
 
 exit()
 

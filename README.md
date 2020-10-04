@@ -12,3 +12,10 @@ This program was only tested and built for Windows, but should work on linux if 
 
 # TODO
 - Post summary screen with missed, successful scrapes.
+
+# Add Scrapers:
+- genius.com
+- songlyrics.com
+- www.lyricsbox.com
+- www.elyrics.net
+- www.karaoke-lyrics.net
