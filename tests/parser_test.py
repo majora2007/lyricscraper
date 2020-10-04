@@ -19,12 +19,13 @@ class TestParse(unittest.TestCase):
     def test_parse_title(self):
         self.assertEqual(lyricscraper.parser.parse_title('The Format - Give It Up.mp3'), 'Give It Up')
         self.assertEqual(lyricscraper.parser.parse_title('01. Me, Myself & I.mp3'), 'Me, Myself & I')
-        #self.assertEqual(lyricscraper.parser.parse_title('C:/Users/Joe/Desktop/Oliver Tree/Ugly is Beautiful (2020)/01. Me, Myself & I.mp3'), 'Me, Myself & I')
+        self.assertEqual(lyricscraper.Song('./tests/songs/13. Introspective.mp3').title, 'Introspective')
         
     
     def test_parse_artist(self):
-        title = lyricscraper.parser.parse_artist('The Format - Give It Up.mp3')
-        self.assertEqual(title, 'The Format')
+        self.assertEqual(lyricscraper.parser.parse_artist('The Format - Give It Up.mp3'), 'The Format')
+        self.assertEqual(lyricscraper.Song('./tests/songs/13. Introspective.mp3').artist, 'Oliver Tree')
+        self.assertEqual(lyricscraper.Song('./tests/songs/01 Hit Parade.flac').artist, 'Neon Indian')
     
     def test_is_song(self):
         self.assertTrue(lyricscraper.parser.is_song('The Format - Give It Up.mp3'))

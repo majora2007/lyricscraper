@@ -19,14 +19,29 @@ class TestAZLyricsScraper(unittest.TestCase):
         print('{} took {} to execute'.format(self.id(), (self.end_time - self.start_time)))
     
     def test_scrape(self):
-        lyrics = self.scapper.scrape(lyricscraper.song.Song('The New Pornographers - The Fake Headlines.mp3')) # lyricscraper.song.Song('The New Pornographers', 'The Fake Headlines')
+        song = lyricscraper.song.Song('')
+        song.artist = 'The New Pornographers'
+        song.title = 'The Fake Headlines'
+        lyrics = self.scapper.scrape(song)
         self.assertTrue(len(lyrics) > 0)
         
-        lyrics = self.scapper.scrape(lyricscraper.song.Song('Oliver Tree - 1993')) # 'Oliver Tree', '1993'
+        song = lyricscraper.song.Song('')
+        song.artist = 'Oliver Tree'
+        song.title = '1993'
+        lyrics = self.scapper.scrape(song) 
+        self.assertTrue(len(lyrics) > 0)
+        
+        song = lyricscraper.song.Song('')
+        song.artist = 'Oliver Tree'
+        song.title = 'I\'m Gone'
+        lyrics = self.scapper.scrape(song) 
         self.assertTrue(len(lyrics) > 0)
     
     def test_no_results(self):
-        lyrics = self.scapper.scrape(lyricscraper.song.Song('Oliver Tree - 2002'))
+        song = lyricscraper.song.Song('')
+        song.artist = 'Oliver Tree'
+        song.title = '2002'
+        lyrics = self.scapper.scrape(song) 
         self.assertTrue(len(lyrics) == 0)
     
         

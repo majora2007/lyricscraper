@@ -138,3 +138,5 @@ dmypy.json
 
 # project specific
 settings.ini
+tests/songs/
+test.py

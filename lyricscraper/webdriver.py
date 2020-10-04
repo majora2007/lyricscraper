@@ -10,6 +10,8 @@ import logging
 
 logger = logging.getLogger('lyricscraper')
 
+# CHROME_URL = 'https://chromedriver.storage.googleapis.com/index.html'
+
 
 class WebDriver(object):
     # Time in seconds to wait for an element to render. This can cause slow downs in code by waiting for extra time.
@@ -44,6 +46,21 @@ class WebDriver(object):
         self.driver = webdriver.Chrome(chrome_options=opts, service_log_path=os.devnull)
         return self.driver
 
+    def _open_webdriver(self, location):
+        pass
+    
+    def update_webdriver(self, platform):
+        # This program is repsonisble for updating web drivers for Chrome/Firefox depending on version. This will try each version until one works
+        # First, attempt to use our current one
+        try:
+            pass
+        except:
+            print('failed')
+        
+
+
+
+    
     def switch_to_frame(self, elem_id):
         logger.debug('Switching to {0} iFrame'.format(elem_id))
         # wait_for_iframe(driver, '//iframe[id="ngtModule"]')
