@@ -71,27 +71,35 @@ class Song():
                 pass
             except ValueError:
                 pass
-     
     
-    def write_lyrics(self, lyrics):
-        # TODO: Figure out how to do for non IDv3
+    def write_lyrics(self, lyrics, force_overwrite):
         self.lyrics = lyrics
         file = File(self.filename)
-        for tag in ('lyrics:description', 'USLT:description', 'LYRICS', 'Lyrics', '©lyr', 'WM/Lyrics'):
+        lyrc = USLT(encoding=Encoding.UTF8, lang='eng', text=lyrics)
+        for tag in ('lyrics:description', 'USLT:description', 'LYRICS', 'Lyrics', u'©lyr', 'WM/Lyrics', 'USLT::eng'):
             try:
-                file[tag] = self.lyrics
+                existing_lyrics = file[tag]
+                if existing_lyrics.text != '' and force_overwrite:
+                    file[tag] = lyrc
+                else:
+                    file[tag] = lyrc
+                file.save()
                 break
             except KeyError:
                 pass
             except ValueError:
                 pass
-        
-        file.save()
-        
-        """ tag = ID3(self.filename, v2_version=3)
-        tag.add(USLT(encoding=Encoding.UTF8, lang='eng', text=lyrics))
-        #tag.setall(UNSYNCED_LYRICS, [SYLT(encoding=Encoding.UTF8, lang='eng', text=lyrics)]) #  format=2, type=1 for SYLT lyrics.
-        tag.save(v2_version=3) """
+ 
+    def read_lyrics(self):
+        file = File(self.filename)
+        for tag in ('lyrics:description', 'USLT:description', 'LYRICS', 'Lyrics', '©lyr', 'WM/Lyrics', 'USLT::eng'):
+            try:
+                self.lyrics = file[tag].text
+                break
+            except KeyError:
+                pass
+            except ValueError:
+                pass
         
     
 

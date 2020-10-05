@@ -86,7 +86,7 @@ def scan_dir(root_dir, scrapers, force_overwrite, embed_lyrics):
                 # Write lyrics to file
                 if len(lyrics) > 0:
                     if embed_lyrics:
-                        song.write_lyrics(lyrics)
+                        song.write_lyrics(lyrics, force_overwrite)
 
                     with codecs.open(os.path.join(dirpath, parser.clean_file_extension(file) + '.txt'), 'w+', 'utf-8') as file:
                         file.write(lyrics.strip())
