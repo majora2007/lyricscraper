@@ -25,7 +25,7 @@ class MusixMatchScraper(Scraper):
         query = song.artist.replace(' ', '-')
         url = self.QUERY_URL % query
         
-        logger.info('[MusixMatch] Searching for {} - {}'.format(song.artist, song.title))
+        logger.info('\t[MusixMatch] Searching for {}'.format(url))
         
         search_results = requests.get(url, headers=self.request_headers).content
         soup = BeautifulSoup(search_results, 'html.parser')
@@ -34,7 +34,7 @@ class MusixMatchScraper(Scraper):
         
         # Validate results found
         if soup.find('div', {'class': 'error-page'}) is not None:
-            logger.info('[MusixMatch] No match found')
+            logger.debug('[MusixMatch] No match found')
             return lyrics
         
         

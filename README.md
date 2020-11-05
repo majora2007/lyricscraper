@@ -8,7 +8,6 @@ players, but nice to have.
 This program was only tested and built for Windows, but should work on linux if built that way ()
 
 # TODO
-- Post summary screen with missed, successful scrapes.
 - Add version number so users can compare with latest from Github (compiled versions)
 
 # Add Scrapers:

@@ -30,14 +30,14 @@ class GeniusScraper(Scraper):
         url = self.QUERY_URL % query
         lyrics = ''
         
-        logger.info('[Genius] Searching for {}'.format(url))
+        logger.info('\t[Genius] Searching for {}'.format(url))
         
         self.driver.get_url(url)
         
         # Validate results found
         try:
             if self.driver.verify_elem('div[ng-if="$ctrl.sections && !$ctrl.has_results"]'):
-                logger.info('[Genius] No match found')
+                logger.debug('[Genius] No match found')
                 return lyrics
         except:
             pass
