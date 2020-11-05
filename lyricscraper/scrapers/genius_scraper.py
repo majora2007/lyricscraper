@@ -10,7 +10,7 @@ from bs4 import BeautifulSoup
 logger = logging.getLogger('lyricscraper')
 
 class GeniusScraper(Scraper):
-    """ Pulls lyrics from Genius """
+    """ Pulls lyrics from Genius. Requires WebDriver """
 
     QUERY_URL = 'https://genius.com/search?q=%s' # https://genius.com/search?q=Watsky%20-%20Don%27t%20be%20nice
     driver = None

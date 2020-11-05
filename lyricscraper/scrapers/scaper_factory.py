@@ -2,6 +2,7 @@
 from .azlyrics_scraper import AZLyricsScraper
 from .musixmatch_scraper import MusixMatchScraper
 from .genius_scraper import GeniusScraper
+from .songlyrics_scraper import SongLyricsScraper
 
 class ScraperFactory:
     """ Singleton Factory of metadata providers. Pass in the name defined in the provider .name() and an instance will be returned. """
