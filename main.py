@@ -145,5 +145,7 @@ def main(program_name='Test Readiness Updater', program_description='This progra
     scan_dir(directory, scrapers, force_overwrite, embed_lyrics)
 
 if __name__ == '__main__':
+    version = '0.0.1'
+    print('Using version: v{}'.format(version))
     main()
 
