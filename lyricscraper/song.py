@@ -31,8 +31,8 @@ class Song():
             self._parse_title_from_tags()
         except:
             logger.debug('[Song] Could not extact IDv3 tags. Falling back to filename parsing.')
-            self.title = parse_title(self.filename)
-            self.artist = parse_artist(self.filename)
+            self.title = parse_title(self.filename).strip()
+            self.artist = parse_artist(self.filename).strip()
         
         logger.debug('Extracted: {} - {}'.format(self.artist, self.title))
     
@@ -40,7 +40,7 @@ class Song():
         file = File(self.filename)
         for tag in ('TPE1', u'©ART', 'Author', 'Artist', 'artist', 'ARTIST', 'TRACK ARTIST', 'TRACKARTIST', 'TrackArtist', 'Track Artist'):
             try:
-                self.artist = file[tag][0]
+                self.artist = file[tag][0].strip()
                 break
             except KeyError:
                 pass
@@ -54,7 +54,7 @@ class Song():
         file = File(self.filename)
         for tag in ('TPE2', 'ALBUMARTIST', u'aART', 'WM/AlbumArtist', 'Album Artist', 'albumartist'):
             try:
-                self.artist = file[tag][0]
+                self.artist = file[tag][0].strip()
                 break
             except KeyError:
                 pass
@@ -65,7 +65,7 @@ class Song():
         file = File(self.filename)
         for tag in ('TIT2', u'©nam', 'Title', 'title', 'TITLE'):
             try:
-                self.title = file[tag][0]
+                self.title = file[tag][0].strip()
                 break
             except KeyError:
                 pass

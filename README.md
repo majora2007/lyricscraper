@@ -8,7 +8,9 @@ players, but nice to have.
 This program was only tested and built for Windows, but should work on linux if built that way ()
 
 # TODO
-- Add version number so users can compare with latest from Github (compiled versions)
+- Ensure force overwrite respects embeded lyrics as well and update documentation on GUI. 
+- Clean up how logging works to GUI to be cleaner, but also preserve errors.
+- Clear log on pressing edit/restart
 
 # Add Scrapers:
 - genius.com
@@ -16,3 +18,7 @@ This program was only tested and built for Windows, but should work on linux if 
 - www.lyricsbox.com
 - www.elyrics.net
 - www.karaoke-lyrics.net
+
+# BUG:
+
+- MusixMatch is not pulling lyrics from the web.

@@ -24,7 +24,9 @@ class AZLyricsScraper(Scraper):
         query = song.artist + ' - ' + song.title
         url = self.QUERY_URL % query
         
-        logger.info('\t[AZLyrics] Searching for {}'.format(url))
+        output_string = '[AZLyrics] Searching... {}'
+        
+        logger.debug('\t[AZLyrics] Searching for {}'.format(url))
         
         search_results = requests.get(url, headers=self.request_headers).content
         soup = BeautifulSoup(search_results, 'html.parser')
@@ -32,9 +34,13 @@ class AZLyricsScraper(Scraper):
         lyrics = ''
         
         # Validate results found
-        if soup.find('div', {'class': 'alert alert-warning'}) is not None:
-            logger.debug('[AZLyrics] No match found')
-            return lyrics
+        try:
+            if soup.find('div', {'class': 'alert alert-warning'}) is not None:
+                #logger.debug('[AZLyrics] No match found')
+                logger.info(output_string.format('No match found'))
+                return lyrics
+        except:
+            pass
         
         
         for a in soup.find('table').find_all('a'):
@@ -48,4 +54,5 @@ class AZLyricsScraper(Scraper):
                             lyrics = div.text
         
         # Clean up lyrics
+        logger.info(output_string.format('Matched!'))
         return lyrics

@@ -127,7 +127,7 @@ def scan_dir(root_dir, scrapers, force_overwrite, embed_lyrics):
 
                     with codecs.open(os.path.join(dirpath, parser.clean_file_extension(file) + '.txt'), 'w+', 'utf-8') as file:
                         file.write(lyrics.strip())
-                    logger.info('\tSuccess: Lyrics written')
+                    logger.info('Success: Lyrics written')
                     artist_matches[song.artist][successful_index] += 1
     
     # Print information about the run

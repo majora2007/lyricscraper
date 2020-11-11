@@ -33,10 +33,16 @@ class SongLyricsScraper(Scraper):
         lyrics = ''
         
         # Validate results found
-        if soup.find('div', {'class': 'alert alert-warning'}) is not None:
-            logger.debug('[AZLyrics] No match found')
-            return lyrics
+        try:
+            if soup.find('div', {'class': 'alert alert-warning'}) is not None:
+                logger.debug('[AZLyrics] No match found')
+                return lyrics
+        except:
+            pass
         
+        if soup.find('table') is None:
+            logger.error('[SongLyrics] failed to find table, critical error.')
+            logger.debug(search_results)
         
         for a in soup.find('table').find_all('a'):
             if a.text is not None and song.title in a.text: # TODO: We should validate the artist as well
