@@ -41,9 +41,16 @@ class AZLyricsScraper(Scraper):
                 return lyrics
         except:
             pass
+
+        table = soup.find('table')
+
+        if table is None:
+            logger.error(f"No table found on the page: {url}")
+            logger.debug(soup.prettify())
+            return lyrics
         
         
-        for a in soup.find('table').find_all('a'):
+        for a in table.find_all('a'):
             if a.text is not None and song.title in a.text: # TODO: We should validate the artist as well
                 if a.get('href').startswith('https://www.azlyrics.com/lyrics/'):
                     search_results = requests.get(a.get('href'), headers=self.request_headers).content
